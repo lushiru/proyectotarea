@@ -1,0 +1,33 @@
+*{
+    padding:0;
+    margin:0;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: darkseagreen;
+    align-items: center;
+    justify-content: center;
+}
+h1,h2,p,form,img {
+    padding: 2rem;
+}
+nav{
+    background-color: aquamarine;
+}
+.nav{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav li{
+    display: flex;
+    flex-direction: column; 
+    list-style: none;
+    background-color: aliceblue;
+    text-decoration:none;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+}
