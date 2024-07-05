@@ -3,7 +3,9 @@ const app = express();
 const path = require("path");
 const dotenv = require("dotenv");
 const hbs = require("hbs");
+
 const uploadRouter = require("./routes/uploadAutos"); // Importa el router de upload
+const leerApi = require("./routes/leerApi");
 
 // Cargar variables de entorno
 dotenv.config();
@@ -18,6 +20,7 @@ hbs.registerPartials(path.join(__dirname, "views", "partials"));
 
 // Middleware para manejar rutas de carga de archivos
 app.use("/upload", uploadRouter);
+app.use("/leerapi", leerApi);
 
 // Ruta principal
 app.get("/", (req, res) => {

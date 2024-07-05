@@ -12,7 +12,18 @@ const storage = multer.diskStorage({
     cb(null, file.originalname); // Nombre original del archivo subido
   },
 });
-const upload = multer({ storage: storage });
+
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype === 'image/jpg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpeg'){
+      cb(null, true)
+  }
+  else{
+    req.fileValidationError = "Forbidden extension";
+    return cb(null, false, req.fileValidationError);
+  }
+}
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 // Ruta para mostrar el formulario de carga de archivos
 router.get("/", (req, res) => {
@@ -25,12 +36,29 @@ router.get("/", (req, res) => {
 
 // Ruta para manejar la carga de archivos (POST)
 router.post("/uploaded", upload.single("file"), (req, res) => {
-  res.render("upload-success", {
-    layout: "layouts/main",
-    title: "Carga Exitosa",
-    message: "Imagen de auto cargado exitosamente",
-    filename: req.file.filename,
-  });
+
+  if (req.fileValidationError) {
+
+    res.render("upload-success", {
+      layout: "layouts/main",
+      title: "Carga no lograda",
+      noerror:false,
+      message: "no es imagen",
+    });
+    
+  }else{
+   
+    res.render("upload-success", {
+      layout: "layouts/main",
+      title: "Carga Exitosa",
+      noerror:true,
+      message: "Imagen de auto cargado exitosamente",
+      filename: req.file.filename,
+    });
+
+  }
+
+
 });
 
 module.exports = router;
